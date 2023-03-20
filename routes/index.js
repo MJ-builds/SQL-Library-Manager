@@ -39,9 +39,20 @@ router.get("/books/new", (req, res) => {
 //POST - create new book
 
 router.post("/books/", asyncHandler(async (req, res) => {
-  let book = await Book.create(req.body);
+  const book = await Book.create(req.body);
   //to replace with res.redirect("/books" + article.id) when routes set up.
   res.redirect("/books/" + book.id);
 }));
+
+/* GET individual article. */
+router.get("/books/:id",asyncHandler(async (req, res) => {
+  const book = await Book.findByPk(req.params.id);
+  if (book) {
+    res.render("update-book", { book: book, title: book.title });
+  } else {
+    res.sendStatus(404);
+  }
+})
+);
 
 module.exports = router;

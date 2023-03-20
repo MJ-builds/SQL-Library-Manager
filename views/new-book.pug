@@ -2,20 +2,20 @@ extends layout
 
 block content
     h1 New Book
-    form
+    form(action="/books/", method="post")
       p
         label(for='title') Title
-        input#title(name='title', type='text')
+        input#title(name='title', type='text' value='')
       p
         label(for='author') Author
-        input#author(name='author', type='text')
+        input#author(name='author', type='text' value='')
       p
         label(for='genre') Genre
-        input#genre(name='genre', type='text')
+        input#genre(name='genre', type='text' value='')
       p
         label(for='year') Year
-        input#year(name='year', type='text')
+        input#year(name='year', type='text' value='') 
       p
         input(type='submit', value='Create New Book')
       p
-        a.button(href='/books') Cancel
+        a.button(href='/books/') Cancel

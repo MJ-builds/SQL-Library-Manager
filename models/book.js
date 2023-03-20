@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Book extends Model {
     /**
@@ -15,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       title: {
         type: DataTypes.STRING,
+        allowNull: false,
         validate: {
-          allowNull: false,
           notEmpty: {
             msg: "Title is required",
           },
@@ -24,8 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       author: {
         type: DataTypes.STRING,
+        allowNull: false,
         validate: {
-          allowNull: false,
           notEmpty: {
             msg: "Author is required",
           },

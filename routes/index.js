@@ -31,9 +31,17 @@ the way I have set things up? */
   })
 );
 
-//GET - create new book form
+//GET - create new book
 router.get("/books/new", (req, res) => {
   res.render("new-book", { books: {}, title: "New Book" });
 });
+
+//POST - create new book
+
+router.post("/books/", asyncHandler(async (req, res) => {
+  let book = await Book.create(req.body);
+  //to replace with res.redirect("/books" + article.id) when routes set up.
+  res.redirect("/books/" + book.id);
+}));
 
 module.exports = router;

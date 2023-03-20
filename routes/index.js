@@ -41,16 +41,42 @@ router.get("/books/new", (req, res) => {
 router.post("/books/", asyncHandler(async (req, res) => {
   const book = await Book.create(req.body);
   //to replace with res.redirect("/books" + article.id) when routes set up.
-  res.redirect("/books/" + book.id);
+  res.redirect("/books/");
 }));
 
-/* GET individual article. */
+/* GET individual book. */
 router.get("/books/:id",asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
   if (book) {
     res.render("update-book", { book: book, title: book.title });
   } else {
     res.sendStatus(404);
+  }
+})
+);
+
+/* POST: Update individual book */
+router.post("/books/:id/",asyncHandler(async (req, res) => {
+  let book;
+  try {
+    book = await Book.findByPk(req.params.id);
+    if (book) {
+      await book.update(req.body);
+      res.redirect("/books/" + book.id);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    if (error.name === "SequelizeValidationError") {
+      book = await Book.build(req.body);
+      book.id = req.params.id;
+      res.render("books/:id/", {
+        article,
+        title: "Edit Book",
+      });
+    } else {
+      throw error;
+    }
   }
 })
 );

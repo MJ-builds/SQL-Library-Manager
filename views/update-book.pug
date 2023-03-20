@@ -2,7 +2,7 @@ extends layout
 
 block content
     h1 View / Update Book
-    form
+    form(method='post', action='/books/' +book.id)
       p
         label(for='title') Title
         input#title(name='title', type='text', value=book.title)
@@ -17,6 +17,11 @@ block content
         input#year(name='year', type='text', value=book.year)
       div.buttons-container
         input(type='submit', value='Update Book')
-        form(method='post', action='/books/8/delete', onsubmit="return confirm('Do you really want to delete this book?');", style="display: inline;")
+        form(method='post', action='/books/:id/delete', onsubmit="return confirm('Do you really want to delete this book?');", style="display: inline;")
           input(type='submit', value='Delete Book')
-          a.button(href='/books/') Back
+        a.button(href='/books/') Back
+
+
+
+
+

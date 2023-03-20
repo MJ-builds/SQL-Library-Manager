@@ -95,3 +95,14 @@ input[type=text] {
 .error {
   color: rgb(236, 15, 15);
 }
+
+.buttons-container {
+  display: inline;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttons-container .button,
+.buttons-container input[type="submit"] {
+  margin-right: -130px;
+}

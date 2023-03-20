@@ -26,10 +26,14 @@ router.get("/books", asyncHandler(async (req, res, next) => {
     const books = await Book.findAll();
     /* instructions noted res.json but not sure it's required here with 
 the way I have set things up? */
-
     //books data is passed to the index view - have included some test data in index.pug
-    res.render("index", { books: books, title: "Placeholder" });
+    res.render("index", { books: books, title: "Books Library" });
   })
 );
+
+//GET - create new book form
+router.get("/books/new", (req, res) => {
+  res.render("new-book", { books: {}, title: "New Book" });
+});
 
 module.exports = router;

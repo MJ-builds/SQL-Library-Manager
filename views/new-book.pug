@@ -5,16 +5,16 @@ block content
     form(action="/books/", method="post")
       p
         label(for='title') Title
-        input#title(name='title', type='text' value='')
+        input#title(name='title', type='text', value='', autofocus)
       p
         label(for='author') Author
-        input#author(name='author', type='text' value='')
+        input#author(name='author', type='text', value='')
       p
         label(for='genre') Genre
-        input#genre(name='genre', type='text' value='')
+        input#genre(name='genre', type='text', value='')
       p
         label(for='year') Year
-        input#year(name='year', type='text' value='') 
+        input#year(name='year', type='text', value='') 
       p
       div.buttons-container
         input(type='submit', value='Create New Book')

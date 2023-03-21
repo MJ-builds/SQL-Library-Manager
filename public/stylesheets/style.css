@@ -1,22 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700&display=swap');
+
 body {
   padding: 10px 50px 50px;
-  font: 18px "Garamond", serif;
+  font-family: 'Roboto', sans-serif;
+  background-color: #F5F5F5;
+  color: #333333;
 }
 
 a {
-  color: #019875;
+  color: #2B7BB9;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 400;
   transition: 0.4s;
 }
 
   a:hover {
-    color: black;
+    color: #2B7BB9;
   }
 
 a.button, input[type=submit] {
   color: white;
-  background: #019875;
+  background: #2B7BB9;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   padding: 10px 14px 12px;
   font-size: 14px;
@@ -34,7 +38,7 @@ input[type=submit] {
 }
 
   a.button:hover, input[type=submit]:hover {
-    background-color: #01b189;
+    background-color: #023b66;
   }
 
 p {
@@ -57,18 +61,28 @@ th {
   border-bottom: 2px solid #D8B493;
   text-align: left;
   padding: 5px 20px 5px 10px;
+  background-color: #2B7BB9;
+  color: #FFFFFF;
+  border-radius: 5px;
+  font-weight: 300;
+  font-size: large;
 }
 
 tr {
   min-height: 50px;
+  background: #d2e9ff;
+  border-radius: 5px;
 }
 
 tr:nth-child(2n) {
-  background: #E7E7E7;
+  background: #e6f1fb;
+  border-radius: 5px;
 }
 
 td {
   padding: 5px 20px 5px 10px;
+  border-radius: 5px;
+  font-weight: 300;
 }
 
 label {

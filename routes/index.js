@@ -37,7 +37,6 @@ router.get("/books/new", (req, res) => {
 });
 
 //POST - create new book
-
 router.post("/books/", asyncHandler(async (req, res) => {
   const book = await Book.create(req.body);
   //to replace with res.redirect("/books" + article.id) when routes set up.
@@ -62,7 +61,8 @@ router.post("/books/:id/",asyncHandler(async (req, res) => {
     book = await Book.findByPk(req.params.id);
     if (book) {
       await book.update(req.body);
-      res.redirect("/books/" + book.id);
+      // Can also change redirect to res.redirect("/books/" + book.id); but with an updated message
+      res.redirect("/books/");
     } else {
       res.sendStatus(404);
     }

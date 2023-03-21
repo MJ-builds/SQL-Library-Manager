@@ -111,9 +111,7 @@ input[type=text] {
 }
 
 .buttons-container {
-  display: inline;
-  justify-content: space-between;
-  align-items: center;
+  margin-right: 20px;
 }
 
 .buttons-container .button,

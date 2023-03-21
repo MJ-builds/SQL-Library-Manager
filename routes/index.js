@@ -81,4 +81,16 @@ router.post("/books/:id/",asyncHandler(async (req, res) => {
 })
 );
 
+// POST delete book - opted for no GET here as the delete button is on the update page and book can just be deleted/destroyed from there
+router.post("/books/:id/delete",asyncHandler(async (req, res) => {
+  const book = await Book.findByPk(req.params.id);
+  if (book) {
+    await book.destroy();
+    res.redirect("/books");
+  } else {
+    res.sendStatus(404);
+  }
+})
+);
+
 module.exports = router;

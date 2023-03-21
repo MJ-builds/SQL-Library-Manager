@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 
 /* GET home page. */
 router.get("/books", asyncHandler(async (req, res, next) => {
-    const books = await Book.findAll();
+    const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
     /* instructions noted res.json but not sure it's required here with 
 the way I have set things up? */
     //books data is passed to the index view - have included some test data in index.pug

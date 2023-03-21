@@ -18,7 +18,7 @@ block content
       p.buttons-container
         input(type='submit', value='Update Book')
       
-    form(method='post', action='/books/' + book.id + '/delete' , onSubmit='return confirm("Are you sure you want to delete this book?")')
+    form(method='post', action='/books/' + book.id + '/delete' , onSubmit='return confirm("This action is permanent. Are you sure you want to delete this book?")')
       p.buttons-container
         input(type='submit', value='Delete Book')
         a.button(href='/books/') Back

@@ -3,13 +3,8 @@ extends layout
 block content
     h1 View / Update Book
 
-    if errors
-        ul
-            each error in errors
-                li= error.message
-                
     form(method='post', action='/books/' +book.id)
-
+      include errors
       p
         label(for='title') Title
         input#title(name='title', type='text', value=book.title)

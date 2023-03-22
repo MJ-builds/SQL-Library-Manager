@@ -87,7 +87,6 @@ router.post(
       book = await Book.findByPk(req.params.id);
       if (book) {
         await book.update(req.body);
-        // Can also change redirect to res.redirect("/books/" + book.id); but with an updated message
         res.redirect("/books/");
       } 
     } catch (error) {

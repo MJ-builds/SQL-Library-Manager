@@ -16,7 +16,7 @@ function asyncHandler(cb) {
   };
 }
 
-// Redirect from the home route to the /books route - to figure out if this sits at the top
+// Redirect from the home route to the /books route
 router.get("/", (req, res) => {
   res.redirect("/books");
 });
@@ -46,7 +46,6 @@ router.post(
     let book;
     try {
       book = await Book.create(req.body);
-      //to replace with res.redirect("/books" + book.id) when routes set up.
       res.redirect("/books/");
     } catch (error) {
       if (error.name === "SequelizeValidationError") {

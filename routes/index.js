@@ -1,6 +1,13 @@
 var express = require("express");
 var router = express.Router();
 
+//debug testing
+router.use((req, res, next) => {
+  console.log("Request body:");
+  console.dir(req.body);
+  next();
+});
+
 //think this is correct
 const Book = require("../models").Book;
 
@@ -38,9 +45,24 @@ router.get("/books/new", (req, res) => {
 
 //POST - create new book
 router.post("/books/", asyncHandler(async (req, res) => {
-  const book = await Book.create(req.body);
+  let book;
+  try {
+    book = await Book.create(req.body);
   //to replace with res.redirect("/books" + article.id) when routes set up.
   res.redirect("/books/");
+  } catch (error) {
+    console.log(error); // Add this line
+    if (error.name === "SequelizeValidationError") {
+      book = await Book.build(req.body);
+      res.render("new-book", {
+        book,
+        errors: error.errors,
+        title: "New Book",
+      });
+    } else {
+      throw error;
+    }
+  }
 }));
 
 /* GET individual book. */
@@ -70,8 +92,9 @@ router.post("/books/:id/",asyncHandler(async (req, res) => {
     if (error.name === "SequelizeValidationError") {
       book = await Book.build(req.body);
       book.id = req.params.id;
-      res.render("books/:id/", {
-        article,
+      res.render("/books/:id/", {
+        book,
+        errors: error.errors,
         title: "Edit Book",
       });
     } else {

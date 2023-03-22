@@ -32,6 +32,10 @@ a.button, input[type=submit] {
   cursor: pointer;
 }
 
+#delete-btn:hover {
+  background-color: rgb(255, 0, 0);
+}
+
 form a.button, input[type=submit] {
   margin-left: 140px;
   transition: 0.4s;

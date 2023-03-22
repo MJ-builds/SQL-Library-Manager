@@ -40,7 +40,11 @@ the way I have set things up? */
 
 //GET - create new book
 router.get("/books/new", (req, res) => {
-  res.render("new-book", { books: {}, title: "New Book" });
+  /* Crated a default empty book object and pass to pug template 
+  so that first render passes with no errors (given future passes 
+    will include the input value's, should title/author be null */
+  const book = {};
+  res.render("new-book", { book: book, title: "New Book" });
 });
 
 //POST - create new book
@@ -53,7 +57,6 @@ router.post("/books/", asyncHandler(async (req, res) => {
   } catch (error) {
     if (error.name === "SequelizeValidationError") {
       book = await Book.build(req.body);
-      book= req.params;
       res.render("new-book", {
         book,
         errors: error.errors,

@@ -8,16 +8,16 @@ block content
       
       p
         label(for='title') Title
-        input#title(name='title', type='text', value='', autofocus)
+        input#title(name='title', type='text', value=book.title, autofocus)
       p
         label(for='author') Author
-        input#author(name='author', type='text', value='')
+        input#author(name='author', type='text', value=book.author)
       p
         label(for='genre') Genre
-        input#genre(name='genre', type='text', value='')
+        input#genre(name='genre', type='text', value=book.genre)
       p
         label(for='year') Year
-        input#year(name='year', type='text', value='') 
+        input#year(name='year', type='text', value=book.year) 
       p
       div.buttons-container
         input(type='submit', value='Create New Book')

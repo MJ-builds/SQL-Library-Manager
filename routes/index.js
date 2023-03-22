@@ -24,12 +24,14 @@ function asyncHandler(cb) {
 }
 
 // Redirect from the home route to the /books route - to figure out if this sits at the top
-router.get('/', (req, res) => {
-  res.redirect('/books');
+router.get("/", (req, res) => {
+  res.redirect("/books");
 });
 
 /* GET home page. */
-router.get("/books", asyncHandler(async (req, res, next) => {
+router.get(
+  "/books",
+  asyncHandler(async (req, res, next) => {
     const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
     /* instructions noted res.json but not sure it's required here with 
 the way I have set things up? */
@@ -48,89 +50,115 @@ router.get("/books/new", (req, res) => {
 });
 
 //POST - create new book
-router.post("/books/new", asyncHandler(async (req, res) => {
-  let book;
-  try {
-    book = await Book.create(req.body);
-  //to replace with res.redirect("/books" + book.id) when routes set up.
-  res.redirect("/books/");
-  } catch (error) {
-    if (error.name === "SequelizeValidationError") {
-      book = await Book.build(req.body);
-      res.render("new-book", {
-        book,
-        errors: error.errors,
-        title: "New Book",
-      });
-    } else {
-      throw error;
+router.post(
+  "/books/new",
+  asyncHandler(async (req, res) => {
+    let book;
+    try {
+      book = await Book.create(req.body);
+      //to replace with res.redirect("/books" + book.id) when routes set up.
+      res.redirect("/books/");
+    } catch (error) {
+      if (error.name === "SequelizeValidationError") {
+        book = await Book.build(req.body);
+        res.render("new-book", {
+          book,
+          errors: error.errors,
+          title: "New Book",
+        });
+      } else {
+        throw error;
+      }
     }
-  }
-}));
+  })
+);
 
 /* GET individual book. */
-router.get("/books/:id",asyncHandler(async (req, res) => {
-  const book = await Book.findByPk(req.params.id);
-  if (book) {
-    res.render("update-book", { book: book, title: book.title });
-  } else {
-    res.sendStatus(404);
-  }
-})
+router.get(
+  "/books/:id",
+  asyncHandler(async (req, res,next) => {
+    const book = await Book.findByPk(req.params.id);
+    if (book) {
+      res.render("update-book", { book: book, title: book.title });
+    } else {
+      const err = new Error("The page you were looking for does not exist.");
+      err.status = 404;
+      res.render("page-not-found", { err });
+      next(err);
+    }
+  })
 );
 
 /* POST: Update individual book */
-router.post("/books/:id/",asyncHandler(async (req, res) => {
-  let book;
-  try {
-    book = await Book.findByPk(req.params.id);
-    if (book) {
-      await book.update(req.body);
-      // Can also change redirect to res.redirect("/books/" + book.id); but with an updated message
-      res.redirect("/books/");
-    } else {
-      res.sendStatus(404);
+router.post(
+  "/books/:id/",
+  asyncHandler(async (req, res,next) => {
+    let book;
+    try {
+      book = await Book.findByPk(req.params.id);
+      if (book) {
+        await book.update(req.body);
+        // Can also change redirect to res.redirect("/books/" + book.id); but with an updated message
+        res.redirect("/books/");
+      } else {
+        const err = new Error("The page you were looking for does not exist.");
+        err.status = 404;
+        res.render("page-not-found", { err });
+        next(err);
+      }
+    } catch (error) {
+      if (error.name === "SequelizeValidationError") {
+        book = await Book.build(req.body);
+        book.id = req.params.id;
+        res.render("update-book", {
+          book,
+          errors: error.errors,
+          title: "Edit Book",
+        });
+      } else {
+        throw error;
+      }
     }
-  } catch (error) {
-    if (error.name === "SequelizeValidationError") {
-      book = await Book.build(req.body);
-      book.id = req.params.id;
-      res.render("update-book", {
-        book,
-        errors: error.errors,
-        title: "Edit Book",
-      });
-    } else {
-      throw error;
-    }
-  }
-})
+  })
 );
 
 // POST delete book - opted for no GET here as the delete button is on the update page and book can just be deleted/destroyed from there
-router.post("/books/:id/delete",asyncHandler(async (req, res) => {
-  const book = await Book.findByPk(req.params.id);
-  if (book) {
-    await book.destroy();
-    res.redirect("/books");
-  } else {
-    res.sendStatus(404);
-  }
-})
+router.post(
+  "/books/:id/delete",
+  asyncHandler(async (req, res,next) => {
+    const book = await Book.findByPk(req.params.id);
+    if (book) {
+      await book.destroy();
+      res.redirect("/books");
+    } else {
+      const err = new Error("The page you were looking for does not exist.");
+      err.status = 404;
+      res.render("page-not-found", { err });
+      next(err);
+    }
+  })
 );
 
-//Middleware 404 error handler
-router.use((req,res,next) => {
-  const err = new Error('The page you were looking for does not exist.');
+/* Middleware WILDCARD 404 error handler to catch any other routes not defined (otherwise it will 
+  assume /books/anything is just a book it can't find (id)) */
+router.get("/books/*", (req, res) => {
+  const err = new Error("The page you were looking for does not exist.");
   err.status = 404;
-  res.render("page-not-found", {err});
+  res.render("page-not-found", { err });
+});
+
+//Middleware 404 error handler
+router.use((req, res, next) => {
+  const err = new Error("The page you were looking for does not exist.");
+  err.status = 404;
+  res.render("page-not-found", { err });
   next(err);
 });
 
 //Middleware global error handler
 router.use((err, req, res, next) => {
   res.status(err.status || 500);
-  res.send(`<h1>Error ${err.status}</h1><p>` + err.message + '</p>');
+  res.send(`<h1>Error ${err.status}</h1><p>` + err.message + "</p>");
   console.log(err.message);
 });
 

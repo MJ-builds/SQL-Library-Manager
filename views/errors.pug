@@ -1,4 +1,5 @@
 if errors
-        ul
-            each error in errors
-                li= error.message
+    h2(class='form-error-header') Oops! Error(s) occurred:
+    ul
+        each error in errors
+            li(class='form-error-prompt')= '* ' + error.message

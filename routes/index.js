@@ -105,7 +105,9 @@ router.post(
   })
 );
 
-// POST delete book - opted for no GET here as the delete button is on the update page and book can just be deleted/destroyed from there
+/* POST delete book - opted for no GET here as the delete button 
+is on the update page and book can just be deleted/destroyed 
+from there */
 router.post(
   "/books/:id/delete",
   asyncHandler(async (req, res,next) => {

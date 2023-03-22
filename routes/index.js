@@ -1,17 +1,10 @@
 var express = require("express");
 var router = express.Router();
 
-//debug testing
-router.use((req, res, next) => {
-  console.log("Request body:");
-  console.dir(req.body);
-  next();
-});
-
-//think this is correct
 const Book = require("../models").Book;
 
-/* Handler function to wrap each route. Function taken from previous lessons */
+/* Handler function to wrap each route. Function itself taken from
+previous lessons, but is fully understood */
 function asyncHandler(cb) {
   return async (req, res, next) => {
     try {
@@ -28,14 +21,11 @@ router.get("/", (req, res) => {
   res.redirect("/books");
 });
 
-/* GET home page. */
+/* GET Library Books List 'home' page. */
 router.get(
   "/books",
   asyncHandler(async (req, res, next) => {
     const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
-    /* instructions noted res.json but not sure it's required here with 
-the way I have set things up? */
-    //books data is passed to the index view - have included some test data in index.pug
     res.render("index", { books: books, title: "Books Library" });
   })
 );
@@ -139,7 +129,9 @@ router.post(
   })
 );
 
-//TEST ROUTE ONLY for error handling status 500 errors. To be removed after code review
+/* TEST ROUTE ONLY for error handling status 500 errors to 
+trigger global middleware below to demonstrate error.pug template.
+To be removed after code review */
 router.get("/test-error", (req, res, next) => {
   const err = new Error("An unexpected server error has occurred.");
   err.status = 500;

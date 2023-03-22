@@ -40,7 +40,7 @@ the way I have set things up? */
 
 //GET - create new book
 router.get("/books/new", (req, res) => {
-  /* Crated a default empty book object and pass to pug template 
+  /* Created a default empty book object and passed to pug template 
   so that first render passes with no errors (given future passes 
     will include the input value's, should title/author be null */
   const book = {};
@@ -48,7 +48,7 @@ router.get("/books/new", (req, res) => {
 });
 
 //POST - create new book
-router.post("/books/", asyncHandler(async (req, res) => {
+router.post("/books/new", asyncHandler(async (req, res) => {
   let book;
   try {
     book = await Book.create(req.body);

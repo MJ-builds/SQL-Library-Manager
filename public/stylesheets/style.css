@@ -55,7 +55,6 @@ ul {
 h1 {
   font-weight:300;
   font-size: 2.5em;
-  margin-bottom: -15px;
 }
 
 h1.index-page-title {
@@ -140,6 +139,7 @@ h2.form-error-header {
   font-weight: 500;
   border: none;
   outline: none;
+  margin-top: -20px;
 }
 
 .form-error-prompt {

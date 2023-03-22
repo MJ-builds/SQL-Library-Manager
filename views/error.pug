@@ -1,10 +1,13 @@
 extends layout
 
 block content
-    h1= 'Error Status: '  + '- Server Error'
-    p='Sorry! ' 
+    h1
+        | Error Status:
+        strong= ' ' + err.status
+        |  - Server Error
+    p
+        | Sorry! 
+        | #{err.message || 'An unexpected server error has occurred.'}
     br
     p
       a.button(href='/books/') Home
-
-      

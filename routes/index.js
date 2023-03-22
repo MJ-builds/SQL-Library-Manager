@@ -141,7 +141,7 @@ router.post(
 
 //test route for error handling status 500 errors
 router.get("/test-error", (req, res, next) => {
-  const err = new Error("This is a test error");
+  const err = new Error("An unexpected server error has occurred.");
   err.status = 500;
   next(err);
 });

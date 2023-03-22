@@ -119,4 +119,19 @@ router.post("/books/:id/delete",asyncHandler(async (req, res) => {
 })
 );
 
+//Middleware 404 error handler
+router.use((req,res,next) => {
+  const err = new Error('The page you were looking for does not exist.');
+  err.status = 404;
+  res.render("page-not-found", {err});
+  next(err);
+});
+
+//Middleware global error handler
+router.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.send(`<h1>Error ${err.status}</h1><p>` + err.message + '</p>');
+  console.log(err.message);
+});
+
 module.exports = router;

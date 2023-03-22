@@ -59,9 +59,9 @@ h1 {
 
 h1.index-page-title {
   padding-bottom: 30px;
-  text-decoration: underline;
+  /* text-decoration: underline;
   text-decoration-thickness: 2px;
-  text-decoration-color: #2B7BB9;
+  text-decoration-color: #2B7BB9; */
   margin-bottom: 0px;
 }
 
@@ -96,6 +96,13 @@ td {
   padding: 5px 20px 5px 10px;
   border-radius: 5px;
   font-weight: 300;
+}
+
+td:hover a {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-decoration-color: #2B7BB9;
 }
 
 label {

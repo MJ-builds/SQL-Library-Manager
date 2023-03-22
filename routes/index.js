@@ -70,9 +70,8 @@ router.get(
     if (book) {
       res.render("update-book", { book: book, title: book.title });
     } else {
-      const err = new Error("The page you were looking for does not exist.");
+      const err = new Error();
       err.status = 404;
-      res.render("page-not-found", { err });
       next(err);
     }
   })

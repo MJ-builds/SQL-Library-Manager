@@ -7,7 +7,7 @@ block content
         |  - Page Not Found
     p
         | Sorry! 
-        | #{err.message}
+        | #{err.message || 'The page you were looking for does not exist.'}
     br
     p
       a.button(href='/books/') Home

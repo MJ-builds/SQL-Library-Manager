@@ -90,12 +90,7 @@ router.post(
         await book.update(req.body);
         // Can also change redirect to res.redirect("/books/" + book.id); but with an updated message
         res.redirect("/books/");
-      } else {
-        const err = new Error("The page you were looking for does not exist.");
-        err.status = 404;
-        res.render("page-not-found", { err });
-        next(err);
-      }
+      } 
     } catch (error) {
       if (error.name === "SequelizeValidationError") {
         book = await Book.build(req.body);
@@ -120,12 +115,7 @@ router.post(
     if (book) {
       await book.destroy();
       res.redirect("/books");
-    } else {
-      const err = new Error("The page you were looking for does not exist.");
-      err.status = 404;
-      res.render("page-not-found", { err });
-      next(err);
-    }
+    } 
   })
 );
 

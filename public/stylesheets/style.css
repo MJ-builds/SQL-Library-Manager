@@ -55,6 +55,7 @@ ul {
 h1 {
   font-weight:300;
   font-size: 2.5em;
+  margin-bottom: -15px;
 }
 
 h1.index-page-title {
@@ -62,6 +63,7 @@ h1.index-page-title {
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-decoration-color: #2B7BB9;
+  margin-bottom: 0px;
 }
 
 h2 {
@@ -132,13 +134,16 @@ input[type=text] {
   margin-right: -130px;
 }
 
-.form-error-prompt {
-  color: red;
-  font-weight: 300;
-}
-
 h2.form-error-header {
   color: red;
   font-size: larger;
   font-weight: 500;
+  border: none;
+  outline: none;
+}
+
+.form-error-prompt {
+  color: red;
+  font-weight: 300;
+  margin-bottom: 5px;
 }

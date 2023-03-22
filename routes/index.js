@@ -139,27 +139,30 @@ router.post(
   })
 );
 
-/* Middleware WILDCARD 404 error handler to catch any other routes not defined (otherwise it will 
-  assume /books/anything is just a book it can't find (id)) */
-router.get("/books/*", (req, res) => {
-  const err = new Error("The page you were looking for does not exist.");
-  err.status = 404;
-  res.render("page-not-found", { err });
-});
-
-//Middleware 404 error handler
-router.use((req, res, next) => {
-  const err = new Error("The page you were looking for does not exist.");
-  err.status = 404;
-  res.render("page-not-found", { err });
+//test route for error handling status 500 errors
+router.get("/test-error", (req, res, next) => {
+  const err = new Error("This is a test error");
+  err.status = 500;
   next(err);
 });
 
-//Middleware global error handler
+// Middleware 404 error handler
+router.use((req, res, next) => {
+  const err = new Error("The page you were looking for does not exist.");
+  err.status = 404;
+  next(err);
+});
+
+// Middleware global error handler
 router.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send(`<h1>Error ${err.status}</h1><p>` + err.message + "</p>");
-  console.log(err.message);
+  if (err.status === 404) {
+    res.status(404);
+    res.render("page-not-found", { err });
+  } else {
+    err.status = 500;
+    res.status(err.status || 500);
+    res.render("error", { err });
+  }
 });
 
 module.exports = router;
